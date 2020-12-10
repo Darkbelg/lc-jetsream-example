@@ -15,14 +15,16 @@
             {{ $post->body }}
         </div>
 
-        @if (auth()->id() === $post->user_id)
+        {{-- @if (auth()->id() === $post->user_id) --}}
+        @if (auth()->user()->hasTeamPermission(auth()->user()->currentTeam, 'update'))
             <div class="mt-2">
                 <a href="{{ route('posts.edit', $post) }}"
                     class="text-white bg-blue-700 rounded inline-block px-4 py-2">Edit Post</a>
             </div>
         @endif
 
-        @if (auth()->id() === $post->user_id)
+        {{-- @if (auth()->id() === $post->user_id) --}}
+        @if (auth()->user()->hasTeamPermission(auth()->user()->currentTeam, 'delete'))
             <form action="{{ route('posts.destroy', $post) }}" method="POST" class="mt-2">
                 @csrf
                 @method('delete')

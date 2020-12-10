@@ -76,12 +76,14 @@ class DatabaseSeeder extends Seeder
 
         Post::create([
             'user_id' => $userA->id,
+            'team_id' => $userA->currentTeam->id,
             'title' => 'Andre Post One',
             'body' => 'This is a post from Andre.'
         ]);
 
         Post::create([
             'user_id' => $userC->id,
+            'team_id' => $userC->currentTeam->id,
             'title' => 'Sally Post One',
             'body' => 'This is a post from Sally.'
         ]);
