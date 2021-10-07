@@ -73,7 +73,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        abort_if(auth()->id() !== $post->user_id, 401);
+        abort_if(auth()->user()->currentTeam->id !== $post->team_id, 401);
+        abort_if(! auth()->user()->hasTeamRole(auth()->user()->currentTeam,'editor'),401);
+        abort_if(! auth()->user()->hasTeamPermission(auth()->user()->currentTeam,'update'),401);
 
         return view('posts.edit', [
             'post' => $post,
@@ -89,7 +91,9 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        abort_if(auth()->id() !== $post->user_id, 401);
+        abort_if(auth()->user()->currentTeam->id !== $post->team_id, 401);
+        abort_if(! auth()->user()->hasTeamRole(auth()->user()->currentTeam,'editor'),401);
+        abort_if(! auth()->user()->hasTeamPermission(auth()->user()->currentTeam,'update'),401);
 
         $request->validate([
             'title' => 'required|min:3',
@@ -111,7 +115,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        abort_if(auth()->id() !== $post->user_id, 401);
+        abort_if(auth()->user()->currentTeam->id !== $post->team_id, 401);
+        abort_if(! auth()->user()->hasTeamRole(auth()->user()->currentTeam,'editor'),401);
+        abort_if(! auth()->user()->hasTeamPermission(auth()->user()->currentTeam,'delete'),401);
 
         $post->delete();
 
