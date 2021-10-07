@@ -44,6 +44,7 @@ class PostController extends Controller
 
         Post::create([
             'user_id' => auth()->id(),
+            'team_id' => auth()->user()->currentTeam->id,
             'title' => $request->title,
             'body' => $request->body,
         ]);
